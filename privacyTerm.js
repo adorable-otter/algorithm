@@ -8,10 +8,12 @@ function solution(
   return privacies
     .reduce((acc, curr, index) => {
       const [date, termString] = curr.split(' ');
-      if (new Date(today) > expiredDate(date, map.get(termString))) acc.push(index + 1);
+      if (new Date(today) > expiredDate(date, map.get(termString))) {
+        acc.push(index + 1);
+      }
       return acc;
     }, [])
-    .sort((a, b) => a > b);
+    .sort((a, b) => a - b);
 }
 
 const convertToMap = (terms) => {
@@ -24,7 +26,7 @@ const convertToMap = (terms) => {
 
 const expiredDate = (targetDate, month) => {
   const date = new Date(targetDate);
-  date.setMonth(date.getMonth()+ + month);
+  date.setMonth(date.getMonth() + +month);
   date.setDate(date.getDate() - 1);
   return date;
 };
