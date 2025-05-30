@@ -21,14 +21,12 @@ const calculate = (apeach, lion) => {
   let lionScore = 0;
   for (let i = 0; i < apeach.length; i++) {
     if (apeach[i] === 0 && lion[i] === 0) continue;
-    if (apeach[i] > lion[i]) apeachScore += 10 - i;
-    if (lion[i] > apeach[i]) lionScore += 10 - i;
+    if (apeach[i] >= lion[i]) {
+      apeachScore += 10 - i;
+    } else {
+      lionScore += 10 - i;
+    }
   }
-  // console.log('🚀 ~ calculate ~ lion:', lion);
-  // console.log('🚀 ~ calculate ~ apeach:', apeach);
-  // console.log('🚀 ~ calculate ~ apeachScore:', apeachScore);
-  // console.log('🚀 ~ calculate ~ lionScore:', lionScore);
-  // console.log('-----------');
   return lionScore > apeachScore ? lionScore - apeachScore : -1;
 };
 
@@ -47,7 +45,7 @@ function getCombinations(arrowCount) {
       return;
     }
 
-    for (let used = remainingArrows; used >= 0; used--) {
+    for (let used = 0; used <= remainingArrows; used++) {
       scores.push(used);
       backtrack(scores, remainingArrows - used);
       scores.pop();
@@ -56,6 +54,14 @@ function getCombinations(arrowCount) {
 
   backtrack([], arrowCount);
   return result;
+}
+
+function isBetter(curr, prev) {
+  for (let i = 10; i >= 0; i--) {
+    if (curr[i] > prev[i]) return true;
+    if (curr[i] < prev[i]) return false;
+  }
+  return false;
 }
 
 const n = 5;
