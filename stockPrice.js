@@ -6,12 +6,13 @@ function solution(prices) {
     const currPrice = prices[i];
 
     while (stack.length > 0 && currPrice < prices[stack.at(-1)]) {
-      stack.pop();
+      const peek = stack.pop();
+      answer[peek] = i - peek;
     }
-    stack.forEach((i) => {
-      answer[i]++;
-    });
     stack.push(i);
+  }
+  for (let i of stack) {
+    answer[i] = prices.length - i - 1;
   }
   answer[answer.length - 1] = 0;
   return answer;
